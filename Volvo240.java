@@ -6,9 +6,8 @@ import java.awt.image.BufferedImage;
 public class Volvo240 extends Car{
     public final static double trimFactor = 1.25;
 
-    public Volvo240(int NrDoorsInput, double enginePowerInput, Color colorInput, int nrSeatsInput, double weightInput,
-                  int widthInput, int lengthInput, double xInput, double yInput, BufferedImage bufferedImageInput){
-        super(NrDoorsInput, enginePowerInput, colorInput, nrSeatsInput, weightInput, widthInput, lengthInput, xInput, yInput, bufferedImageInput);
+    public Volvo240(Color colorInput, double xInput, double yInput, BufferedImage bufferedImageInput){
+        super(4, 50, colorInput, 5, 40, 2, 1, xInput, yInput, bufferedImageInput);
 
     }
 

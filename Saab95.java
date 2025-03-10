@@ -7,9 +7,8 @@ public class Saab95 extends Car{
 
     public boolean turboOn = false;
 
-    public Saab95(int NrDoorsInput, double enginePowerInput, Color colorInput, int nrSeatsInput, double weightInput,
-                  int widthInput, int lengthInput, double xInput, double yInput, BufferedImage bufferedImageInput){
-        super(NrDoorsInput, enginePowerInput, colorInput, nrSeatsInput, weightInput, widthInput, lengthInput, xInput, yInput, bufferedImageInput);
+    public Saab95(Color colorInput, double xInput, double yInput, BufferedImage bufferedImageInput){
+        super(4, 70, colorInput, 5, 30, 2, 3, xInput, yInput, bufferedImageInput);
     }
     
 

@@ -23,6 +23,7 @@ public class CarView extends JFrame{
 
     // The controller member
     CarController carC;
+    CarModel carM;
 
     DrawPanel drawPanel = new DrawPanel(X, Y-240);
 
@@ -108,14 +109,14 @@ public class CarView extends JFrame{
         gasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.gas(gasAmount);
+                carM.gas(gasAmount);
             }
         });
 
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                carC.startCar();
+                carM.startCar();
             }
         });
 
@@ -123,28 +124,28 @@ public class CarView extends JFrame{
         brakeButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                carC.brakeCar(gasAmount);
+                carM.brakeCar(gasAmount);
             }
         });
 
         stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                carC.stopCar();
+                carM.stopCar();
             }
         });
 
         turboOnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.turboOn();
+                carM.turboOn();
             }
         });
 
         turboOffButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.turboOff();
+                carM.turboOff();
             }
         });
 
@@ -152,7 +153,7 @@ public class CarView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                carC.raiseDumpBox();
+                carM.raiseDumpBox();
             }
         });
 
@@ -160,7 +161,7 @@ public class CarView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                carC.lowerDumpBox();
+                carM.lowerDumpBox();
             }
         });
 
