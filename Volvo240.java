@@ -1,13 +1,14 @@
 package src;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Volvo240 extends Car{
     public final static double trimFactor = 1.25;
 
     public Volvo240(int NrDoorsInput, double enginePowerInput, Color colorInput, int nrSeatsInput, double weightInput,
-                  int widthInput, int lengthInput, double xInput, double yInput){
-        super(NrDoorsInput, enginePowerInput, colorInput, nrSeatsInput, weightInput, widthInput, lengthInput, xInput, yInput);
+                  int widthInput, int lengthInput, double xInput, double yInput, BufferedImage bufferedImageInput){
+        super(NrDoorsInput, enginePowerInput, colorInput, nrSeatsInput, weightInput, widthInput, lengthInput, xInput, yInput, bufferedImageInput);
 
     }
 

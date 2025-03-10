@@ -2,10 +2,12 @@ package src;
 
 
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /*
@@ -26,11 +28,11 @@ public class CarController {
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
-    ArrayList<Car> cars = new ArrayList<>();
-    ArrayList<Truck> trucks = new ArrayList<>();
-    Garage<Volvo240> garage = new Garage<>(1);
+    ArrayList<Vehicle> vehicles = new ArrayList<>();
 
-    ArrayList<Car> carsToRemove = new ArrayList<>();
+    static Garage<Volvo240> garage;
+
+    ArrayList<Vehicle> vehiclesToRemove = new ArrayList<>();
 
     //methods:
 
@@ -39,12 +41,22 @@ public class CarController {
         CarController cc = new CarController();
 
         // cc.cars.add(new Volvo240());
-        Volvo240 volvo = new Volvo240(4, 70, Color.red, 4, 30, 2, 3, 0, 300);
-        Saab95 saab = new Saab95(4, 70, Color.YELLOW, 4, 30, 2, 3, 0, 0);
-        Scania scania = new Scania(4, 100, Color.BLUE, 200, 60, 0, 150);
-        cc.cars.add(volvo);
-        cc.cars.add(saab);
-        cc.trucks.add(scania);
+        Volvo240 volvo = null;
+        Saab95 saab = null;
+        Scania scania = null;
+        try {
+            volvo = new Volvo240(4, 70, Color.red, 4, 30, 2, 3, 0, 300, ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg")));
+            saab = new Saab95(4, 70, Color.YELLOW, 4, 30, 2, 3, 0, 0, ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg")));
+            scania = new Scania(4, 100, Color.BLUE, 200, 60, 0, 150, ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg")));
+            garage = new Garage<>(1, ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg")));
+        } catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+
+        cc.vehicles.add(volvo);
+        cc.vehicles.add(saab);
+        cc.vehicles.add(scania);
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
 
@@ -57,15 +69,15 @@ public class CarController {
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            for (Car car : carsToRemove){
-                cars.remove(car);
+            for (Vehicle car : vehiclesToRemove){
+                vehicles.remove(car);
             }
-            for (Car car : cars) {
+            for (Vehicle car : vehicles) {
                 moveLogic(car);
                 if (garage.isColliding(car) ){
                     if (car instanceof Volvo240 volvo){
                         garage.addCar(volvo);
-                        carsToRemove.add(car);
+                        vehiclesToRemove.add(car);
                     }
 
                     else{
@@ -74,16 +86,14 @@ public class CarController {
                     }
                 }
 
-                frame.drawPanel.currentVehiclePositions(cars, trucks);
                 frame.drawPanel.repaint();
 
             }
-            for (Truck truck : trucks){
+            for (Vehicle truck : vehicles){
                 moveLogic(truck);
                 if (garage.isColliding(truck)){
                     truck.reverseDirection();
                 }
-                frame.drawPanel.currentVehiclePositions(cars, trucks);
                 frame.drawPanel.repaint();
             }
 
@@ -93,47 +103,41 @@ public class CarController {
     // Calls the gas method for each car once
     void gas(int amount) {
         double gasAmount = ((double) amount) / 100;
-       for (Car car : cars){
-            car.gas(gasAmount);
+       for (Vehicle vehicle : vehicles){
+           vehicle.gas(gasAmount);
         }
-        for (Truck truck : trucks){
-            truck.gas(gasAmount);
-        }
+
     }
 
     void startCar() {
-        for(Car car: cars){
-            car.startEngine();
+        for (Vehicle vehicle : vehicles){
+            vehicle.startEngine();
         }
-        for(Truck truck: trucks){
-            truck.startEngine();
+        for (Vehicle vehicle : vehicles){
+            vehicle.startEngine();
         }
     }
 
     void brakeCar(double amount){
         double brakeAmount = amount / 100;
 
-        for(Car car: cars){
-            car.brake(brakeAmount);
+        for (Vehicle vehicle : vehicles){
+            vehicle.brake(brakeAmount);
         }
 
-        for(Truck truck: trucks){
-            truck.brake(brakeAmount);
-        }
+
     }
 
     void stopCar(){
-        for (Car car: cars){
-            car.stopEngine();
+        for (Vehicle vehicle : vehicles){
+            vehicle.stopEngine();
         }
-        for(Truck truck: trucks){
-            truck.stopEngine();
-        }
+
     }
 
     void turboOn(){
-        for (Car car: cars){
-            if (car instanceof Saab95 saab){
+        for (Vehicle vehicle : vehicles){
+            if (vehicle instanceof Saab95 saab){
                 saab.setTurboOn();
 
             }
@@ -141,24 +145,24 @@ public class CarController {
     }
 
     void turboOff(){
-        for (Car car: cars){
-            if (car instanceof Saab95 saab){
+        for (Vehicle vehicle : vehicles){
+            if (vehicle instanceof Saab95 saab){
                 saab.setTurboOff();
             }
         }
     }
 
     void raiseDumpBox(){
-        for (Truck truck: trucks){
-            if (truck instanceof Scania scania){
+        for (Vehicle vehicle : vehicles){
+            if (vehicle instanceof Scania scania){
                 scania.raiseDumpBox(5);
             }
         }
     }
 
     void lowerDumpBox(){
-        for (Truck truck: trucks){
-            if (truck instanceof Scania scania){
+        for (Vehicle vehicle : vehicles){
+            if (vehicle instanceof Scania scania){
                 scania.lowerDumpBox(5);
             }
         }

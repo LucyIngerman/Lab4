@@ -2,17 +2,18 @@ package src;
 
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Garage<T>{
     int carCapacity;
     int currentCarsAmount = 0;
     private T[] cars;
     private final Rectangle bounds = new Rectangle(300, 300, 101, 96);
-
+    BufferedImage bufferedImage;
 
     // Test
     @SuppressWarnings("unchecked")
-    public Garage(int capacityInput){
+    public Garage(int capacityInput, BufferedImage bufferedImageInput){
         carCapacity = capacityInput;
 
         this.cars = (T[]) new Object[capacityInput];
@@ -55,4 +56,7 @@ public class Garage<T>{
         return bounds.intersects(vehicle.getBounds()); // Check if car and workshop overlap
     }
 
+    public BufferedImage getBufferedImage() {
+        return bufferedImage;
+    }
 }

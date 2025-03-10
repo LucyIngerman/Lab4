@@ -1,13 +1,14 @@
 package src;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 
 public class Scania extends TipperTruck{
 
     public Scania(int NrDoorsInput, double enginePowerInput, Color colorInput, double maxWeightInput,
-                  int dumpBoxMaxAngleInput, double xInput, double yInput){
-        super(NrDoorsInput, enginePowerInput, colorInput, maxWeightInput, dumpBoxMaxAngleInput, xInput, yInput);
+                  int dumpBoxMaxAngleInput, double xInput, double yInput, BufferedImage bufferedImageInput){
+        super(NrDoorsInput, enginePowerInput, colorInput, maxWeightInput, dumpBoxMaxAngleInput, xInput, yInput, bufferedImageInput);
 
     }
 

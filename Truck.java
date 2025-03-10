@@ -1,6 +1,7 @@
 package src;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public abstract class Truck extends Vehicle{
     
@@ -8,8 +9,8 @@ public abstract class Truck extends Vehicle{
     private double maxWeight;
 
 
-    public Truck(int NrDoorsInput, double enginePowerInput, Color colorInput, double maxWeightInput, double xInput, double yInput){
-        super(NrDoorsInput, enginePowerInput, colorInput, xInput, yInput);
+    public Truck(int NrDoorsInput, double enginePowerInput, Color colorInput, double maxWeightInput, double xInput, double yInput, BufferedImage bufferedImageInput){
+        super(NrDoorsInput, enginePowerInput, colorInput, xInput, yInput, bufferedImageInput);
         maxWeight = maxWeightInput;
     }
 
@@ -35,4 +36,3 @@ public abstract class Truck extends Vehicle{
     }
 
 }
-

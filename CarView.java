@@ -6,6 +6,8 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 /**
  * This class represents the full view of the MVC pattern of your car simulator.
@@ -174,5 +176,39 @@ public class CarView extends JFrame{
         this.setVisible(true);
         // Make sure the frame exits when "x" is pressed
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+}
+
+// This panel represents the animated part of the view with the car images.
+
+class DrawPanel extends JPanel{
+    ArrayList<Sprite> sprites = new ArrayList<>();
+
+    void updateSprites(ArrayList<Sprite> spritesInput){
+        sprites = spritesInput;
+    }
+
+    // Initializes the panel and reads the images
+    public DrawPanel(int x, int y) {
+        this.setDoubleBuffered(true);
+        this.setPreferredSize(new Dimension(x, y));
+        this.setBackground(Color.green);
+
+    }
+
+    // This method is called each time the panel updates/refreshes/repaints itself
+    // TODO: Change to suit your needs.
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        for (Sprite sprite: sprites){
+            double[] position = sprite.getPosition();
+
+            BufferedImage image = sprite.getImage();
+
+            g.drawImage(image, (int) position[0], (int) position[1], null); // see javadoc for more info on the parameters
+        }
+
     }
 }

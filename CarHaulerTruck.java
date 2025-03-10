@@ -1,6 +1,7 @@
 package src;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Stack;
 
 public abstract class CarHaulerTruck extends Truck{
@@ -11,8 +12,8 @@ public abstract class CarHaulerTruck extends Truck{
 
 
     public CarHaulerTruck(int NrDoorsInput, double enginePowerInput, Color colorInput, double maxWeightInput,
-                          int carCapacityInput, double truckWidthInput, double xInput, double yInput){
-        super(NrDoorsInput, enginePowerInput, colorInput, maxWeightInput, xInput, yInput);
+                          int carCapacityInput, double truckWidthInput, double xInput, double yInput, BufferedImage bufferedImageInput){
+        super(NrDoorsInput, enginePowerInput, colorInput, maxWeightInput, xInput, yInput, bufferedImageInput);
         carCapacity = carCapacityInput;
         truckWidth = truckWidthInput;
 

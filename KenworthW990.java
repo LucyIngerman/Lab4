@@ -1,11 +1,12 @@
 package src;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class KenworthW990 extends CarHaulerTruck{
     
-    public KenworthW990(Color colorInput, double xInput, double yInput){
-        super(2, 405, colorInput,200, 6, 2.5, xInput, yInput);
+    public KenworthW990(Color colorInput, double xInput, double yInput, BufferedImage bufferedImageInput){
+        super(2, 405, colorInput,200, 6, 2.5, xInput, yInput, bufferedImageInput);
     }
 
     public double speedFactor(){

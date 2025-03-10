@@ -2,6 +2,7 @@ package src;
 
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public abstract class Car extends Vehicle{
     private final int nrSeats;
@@ -10,8 +11,8 @@ public abstract class Car extends Vehicle{
     private final int width;
 
     public Car(int NrDoorsInput, double enginePowerInput, Color colorInput, int nrSeatsInput, double weightInput,
-               int widthInput, int lengthInput, double xInput, double yInput){
-        super(NrDoorsInput, enginePowerInput, colorInput, xInput, yInput);
+               int widthInput, int lengthInput, double xInput, double yInput, BufferedImage bufferedImageInput){
+        super(NrDoorsInput, enginePowerInput, colorInput, xInput, yInput, bufferedImageInput);
         nrSeats = nrSeatsInput;
         weight = weightInput;
         width = widthInput;

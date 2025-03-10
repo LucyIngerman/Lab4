@@ -1,6 +1,7 @@
 package src;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public abstract class TipperTruck extends Truck{
     private final int dumpBoxMaxAngle;
@@ -8,8 +9,8 @@ public abstract class TipperTruck extends Truck{
 
 
     public TipperTruck(int NrDoorsInput, double enginePowerInput, Color colorInput, double maxWeightInput,
-                       int dumpBoxMaxAngleInput, double xInput, double yInput){
-        super(NrDoorsInput, enginePowerInput, colorInput, maxWeightInput, xInput, yInput);
+                       int dumpBoxMaxAngleInput, double xInput, double yInput, BufferedImage bufferedImageInput){
+        super(NrDoorsInput, enginePowerInput, colorInput, maxWeightInput, xInput, yInput, bufferedImageInput);
         dumpBoxMaxAngle = dumpBoxMaxAngleInput;
     }
 
