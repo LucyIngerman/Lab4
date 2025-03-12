@@ -15,16 +15,14 @@ public abstract class Vehicle implements IMovable{       // Why extend from mova
     private double x;
     private double y;
     private boolean engineOn = false;
-    private final BufferedImage bufferedImage;
 
 
-    public Vehicle(int NrDoorsInput, double enginePowerInput, Color colorInput, double xInput, double yInput, BufferedImage bufferedImageInput){
+    public Vehicle(int NrDoorsInput, double enginePowerInput, Color colorInput, double xInput, double yInput){
         nrDoors = NrDoorsInput;
         enginePower = enginePowerInput;
         color = colorInput;
         x = xInput;
         y = yInput;
-        bufferedImage = bufferedImageInput;
     }
 
 
@@ -147,10 +145,6 @@ public abstract class Vehicle implements IMovable{       // Why extend from mova
             engineOn = false;
             currentSpeed = 0;
         }
-    }
-
-    public BufferedImage getBufferedImage() {
-        return bufferedImage;
     }
 
     public boolean getEngineStatus(){

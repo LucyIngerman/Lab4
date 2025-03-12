@@ -1,13 +1,11 @@
 package src;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-
 
 public class Scania extends TipperTruck{
 
-    public Scania(Color colorInput, double xInput, double yInput, BufferedImage bufferedImageInput){
-        super(2, 80, colorInput, 90, 75, xInput, yInput, bufferedImageInput);
+    public Scania(Color colorInput, double xInput, double yInput){
+        super(2, 80, colorInput, 90, 75, xInput, yInput);
 
     }
 

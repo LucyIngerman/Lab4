@@ -19,11 +19,12 @@ import java.awt.event.ActionListener;
 
 public class CarController {
     private final CarModel carM;
-    private final CarView carV;
+    private JButton gasButton;
 
-    public CarController(CarModel model) {
+
+    public CarController(CarModel model, ) {
         this.carM = model;
-        this.carV = carM.frame;
+
         addActionListeners();
     }
 
@@ -42,6 +43,7 @@ public class CarController {
             public void actionPerformed(ActionEvent e) {
                 carM.gas(carM.gasAmount);
             }
+
         });
 
         carV.getBrakeButton().addActionListener(new ActionListener() {

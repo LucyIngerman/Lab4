@@ -11,8 +11,8 @@ public abstract class Car extends Vehicle{
     private final int width;
 
     public Car(int NrDoorsInput, double enginePowerInput, Color colorInput, int nrSeatsInput, double weightInput,
-               int widthInput, int lengthInput, double xInput, double yInput, BufferedImage bufferedImageInput){
-        super(NrDoorsInput, enginePowerInput, colorInput, xInput, yInput, bufferedImageInput);
+               int widthInput, int lengthInput, double xInput, double yInput){
+        super(NrDoorsInput, enginePowerInput, colorInput, xInput, yInput);
         nrSeats = nrSeatsInput;
         weight = weightInput;
         width = widthInput;

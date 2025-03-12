@@ -1,5 +1,6 @@
 package src;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -7,7 +8,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Observable;
 
 /**
  * This class represents the full view of the MVC pattern of your car simulator.
@@ -17,7 +20,7 @@ import java.util.ArrayList;
  * TODO: Write more actionListeners and wire the rest of the buttons
  **/
 
-public class CarView extends JFrame{
+public class CarView extends JFrame {
     private static final int X = 800;
     private static final int Y = 800;
 
@@ -30,7 +33,6 @@ public class CarView extends JFrame{
 
     JPanel gasPanel = new JPanel();
     JSpinner gasSpinner = new JSpinner();
-    // int gasAmount = 0;
     JLabel gasLabel = new JLabel("Amount of gas");
 
     JButton gasButton = new JButton("Gas");
@@ -46,9 +48,13 @@ public class CarView extends JFrame{
     // Constructor
     public CarView(String framename, CarModel cm){
         this.carM = cm;
-        drawPanel = new DrawPanel(X, Y-240);
+        drawPanel = new DrawPanel(X, Y-240, cm);
         initComponents(framename);
     }
+
+
+
+
 
     // Sets everything in place and fits everything
     // TODO: Take a good look and make sure you understand how these methods and components work
@@ -213,19 +219,47 @@ public class CarView extends JFrame{
 
 // This panel represents the animated part of the view with the car images.
 
-class DrawPanel extends JPanel{
-    ArrayList<Sprite> sprites = new ArrayList<>();
+class DrawPanel extends JPanel implements Observer{
 
-    void updateSprites(ArrayList<Sprite> spritesInput){
-        sprites = spritesInput;
+    BufferedImage volvoImage;
+    // To keep track of a single car's position
+
+    ArrayList<Vehicle> vehicles = new ArrayList<>();
+
+    CarModel carM;
+
+    BufferedImage volvoWorkshopImage;
+
+    BufferedImage scaniaImage;
+
+    BufferedImage saabImage;
+
+    public void update() {
+        vehicles = carM.getCurrentVehicles();
+        repaint();
     }
 
     // Initializes the panel and reads the images
-    public DrawPanel(int x, int y) {
+    public DrawPanel(int x, int y, CarModel carModel) {
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.green);
+        carM = carModel;
+        try {
+            // You can remove the "pics" part if running outside of IntelliJ and
+            // everything is in the same main folder.
+            // volvoImage = ImageIO.read(new File("Volvo240.jpg"));
 
+            // Remember to right-click src New -> Package -> name: pics -> MOVE *.jpg to pics.
+            // if you are starting in IntelliJ.
+            volvoImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg"));
+            scaniaImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg"));
+            volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
+            saabImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/saab95.jpg"));
+        } catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
     }
 
     // This method is called each time the panel updates/refreshes/repaints itself
@@ -233,15 +267,17 @@ class DrawPanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        for (Sprite sprite: sprites){
-            double[] position = sprite.getPosition();
-
-            BufferedImage image = sprite.getImage();
-
-            g.drawImage(image, (int) position[0], (int) position[1], null); // see javadoc for more info on the parameters
+        for (Vehicle vehicle : vehicles) {
+            BufferedImage image = switch (vehicle.getClass().getSimpleName()) {
+                case "Volvo240" -> volvoImage;
+                case "Saab95" -> saabImage;
+                case "Scania" -> scaniaImage;
+                default -> null;
+            };
+            int x = (int) vehicle.getPosition()[0];
+            int y = (int) vehicle.getPosition()[1];
+            g.drawImage(image, x, y, null);
         }
-
-
+        g.drawImage(volvoWorkshopImage, 300, 300, null);
     }
 }
