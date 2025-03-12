@@ -23,13 +23,13 @@ public class VehicleFactory {
 
     
 
-    public Garage<Vehicle> createVehicleGarage(int capacityInput, BufferedImage image){
-        Garage<Vehicle> newGarage = new Garage<Vehicle>(capacityInput, image);
+    public Garage<Vehicle> createVehicleGarage(int capacityInput, double x, double y,BufferedImage image){
+        Garage<Vehicle> newGarage = new Garage<Vehicle>(capacityInput, x, y,image);
         return newGarage;
     }
 
-    public Garage<Volvo240> createVolvo240Garage(int capacityInput, BufferedImage image){
-        Garage<Volvo240> newGarage = new Garage<Volvo240>(capacityInput, image);
+    public Garage<Volvo240> createVolvo240Garage(int capacityInput, double x, double y, BufferedImage image){
+        Garage<Volvo240> newGarage = new Garage<Volvo240>(capacityInput, x, y, image);
         return newGarage;
     }
 }

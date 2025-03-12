@@ -4,50 +4,100 @@ package src;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/*
-* This class represents the Controller part in the MVC pattern.
-* Its responsibilities are to listen to the View and responds in an appropriate manner by
-* modifying the model state and the updating the view.
- */
+
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class CarController {
-    // member fields:
+    private final CarModel carM;
+    private final CarView carV;
 
-    // The delay (ms) corresponds to 20 updates a sec (hz)
-    private final int delay = 50;
-    private final CarModel carM = new CarModel();
-    // The timer is started with a listener (see below) that executes the statements
-    // each step between delays.
-    Timer timer = new Timer(delay, new TimerListener());
-
-    // The frame that represents this instance View of the MVC pattern
-    CarView frame;
-    // A list of cars, modify if needed
-
-
-
-
-
-
-    /* Each step the TimerListener moves all the cars in the list and tells the
-    * view to update its images. Change this method to your needs.
-    * */
-    private class TimerListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            ArrayList<Sprite> sprites = carM.actionToPerform();
-
-        }
+    public CarController(CarModel model) {
+        this.carM = model;
+        this.carV = carM.frame;
+        addActionListeners();
     }
 
+    private void addActionListeners() {
 
 
+        carV.getGasSpinner().addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                carM.gasAmount = (int) ((JSpinner)e.getSource()).getValue();
+            }
+        });
 
 
+        carV.getGasButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carM.gas(carM.gasAmount);
+            }
+        });
+
+        carV.getBrakeButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carM.brakeCar(carM.gasAmount);
+            }
+        });
+
+        carV.getStopButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carM.stopCar();
+            }
+        });
+
+        carV.getTurboOnButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carM.turboOn();
+            }
+        });
+
+        carV.getTurboOffButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carM.turboOff();
+            }
+        });
+
+        carV.getLiftBedButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carM.raiseDumpBox();
+            }
+        });
+
+        carV.getLowerBedButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carM.lowerDumpBox();
+            }
+        });
+        carV.startButton.addActionListener(new ActionListener() {
+             @Override
+            public void actionPerformed(ActionEvent e){
+               carM.startCar();
+           }
+       });
+        carV.stopButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carM.stopCar();
+            }
+        });
+    }
 }
+
 

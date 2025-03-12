@@ -1,7 +1,10 @@
 package src;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -13,33 +16,47 @@ public class CarModel{
 
     ArrayList<Vehicle> vehiclesToRemove = new ArrayList<>();
 
+    int gasAmount;
+
     ArrayList<Sprite> sprites = new ArrayList<>();
-    
+    CarView frame;
+    private final int delay = 50;
+    // The timer is started with a listener (see below) that executes the statements
+    // each step between delays.
+    Timer timer = new Timer(delay, new TimerListener());
 
     public static void main(String[] args) throws IOException {
         // Instance of this class
         CarModel cm = new CarModel();
-        CarController cc = new CarController();
+
 
         VehicleFactory factory = new VehicleFactory();
 
         Volvo240 volvo = factory.createVolvo240(Color.BLACK, 0, 300, ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg")));
         Saab95 saab = factory.createSaab95(Color.RED, 0, 0, ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg")));
         Scania scania = factory.createScania(Color.BLUE, 0, 150, ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg")));
+        cm.garage = factory.createVolvo240Garage(4, 300, 300, ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg")));
         cm.vehicles.add(volvo);
         cm.vehicles.add(saab);
         cm.vehicles.add(scania);
         // Start a new view and send a reference of self
-        cc.frame = new CarView("CarSim 1.0", cc);
+        cm.frame = new CarView("CarSim 1.0", cm);
+
+        CarController cc = new CarController(cm);
 
         // Start the timer
-        cc.timer.start();
+        cm.timer.start();
     }
 
 
+    private class TimerListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            ArrayList<Sprite> sprites = actionToPerform();
+            frame.drawPanel.updateSprites(sprites);
+            frame.drawPanel.repaint();
+        }
 
-
-
+    }
     public ArrayList<Sprite> actionToPerform(){
         for (Vehicle vehicle : vehiclesToRemove){
             vehicles.remove(vehicle);
@@ -72,17 +89,18 @@ public class CarModel{
 
                 }
             }
-
         
         }
         
-
+        sprites.clear();
         for (Vehicle vehicle: vehicles){
 
             Sprite sprite = new Sprite(vehicle.getPosition(), vehicle.getBufferedImage());
 
             sprites.add(sprite);
         }
+        Sprite sprite = new Sprite(garage.getPosition(), garage.getBufferedImage());
+        sprites.add(sprite);
         return sprites;
 
         
