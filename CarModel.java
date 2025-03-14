@@ -1,10 +1,10 @@
 package src;
 
 import javax.swing.*;
-import java.awt.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
+
 import java.util.ArrayList;
 
 
@@ -13,15 +13,13 @@ public class CarModel implements Subject{
     private ArrayList<Observer> observers = new ArrayList<>();
 
     ArrayList<Vehicle> vehicles = new ArrayList<>();
-
-    private CarController cc;
+    ArrayList<VPos> vPos = new ArrayList<>();
 
     Garage<Volvo240> garage;
 
     private ArrayList<Vehicle> vehiclesToRemove = new ArrayList<>();
 
     int gasAmount;
-    CarView frame;
     private final int delay = 50;
     // The timer is started with a listener (see below) that executes the statements
     // each step between delays.
@@ -36,15 +34,13 @@ public class CarModel implements Subject{
         observers.remove(observer);
     }
 
-    public void notifyObservers() {
+    public void notifyObservers(ArrayList<VPos> vPos) {
         for (Observer observer : observers) {
-            observer.update();
+            observer.update(vPos);
         }
     }
 
-    public ArrayList<Vehicle> getCurrentVehicles() {  // Observers can pull this data
-        return vehicles;
-    }
+
 
 
     private class TimerListener implements ActionListener {
@@ -83,14 +79,20 @@ public class CarModel implements Subject{
                 }
 
             }
+            vPos.clear();
+            for (Vehicle vehicle : vehicles){
+                vPos.add(new VPos(vehicle.getPosition(), vehicle.getClass().getSimpleName()));
+            }
 
-            notifyObservers();
+
+            notifyObservers(vPos);
         }
     }
 
     // Calls the gas method for each car once
     void gas(int amount) {
         double gasAmount = ((double) amount) / 100;
+        System.out.println("yes");
         for (Vehicle vehicle : vehicles){
             vehicle.gas(gasAmount);
         }
@@ -101,9 +103,7 @@ public class CarModel implements Subject{
         for (Vehicle vehicle : vehicles){
             vehicle.startEngine();
         }
-        for (Vehicle vehicle : vehicles){
-            vehicle.startEngine();
-        }
+        System.out.println("started");
     }
 
     void brakeCar(double amount){

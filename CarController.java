@@ -1,105 +1,46 @@
 package src;
 
 
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.ArrayList;
 
-
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class CarController {
     private final CarModel carM;
-    private JButton gasButton;
+    private final JSpinner gasSpinner;
+    private final JButton gasButton, brakeButton, stopButton, turboOnButton, turboOffButton, liftBedButton, lowerBedButton, startButton;
 
-
-    public CarController(CarModel model, ) {
+    public CarController(CarModel model, JSpinner gasSpinner, JButton gasButton, JButton brakeButton, JButton stopButton,
+                         JButton turboOnButton, JButton turboOffButton, JButton liftBedButton, JButton lowerBedButton,
+                         JButton startButton) {
         this.carM = model;
+        this.gasSpinner = gasSpinner;
+        this.gasButton = gasButton;
+        this.brakeButton = brakeButton;
+        this.stopButton = stopButton;
+        this.turboOnButton = turboOnButton;
+        this.turboOffButton = turboOffButton;
+        this.liftBedButton = liftBedButton;
+        this.lowerBedButton = lowerBedButton;
+        this.startButton = startButton;
 
         addActionListeners();
     }
 
+
     private void addActionListeners() {
+        gasSpinner.addChangeListener(e -> carM.gasAmount = (int) ((JSpinner) e.getSource()).getValue());
 
-
-        carV.getGasSpinner().addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                carM.gasAmount = (int) ((JSpinner)e.getSource()).getValue();
-            }
-        });
-
-
-        carV.getGasButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                carM.gas(carM.gasAmount);
-            }
-
-        });
-
-        carV.getBrakeButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                carM.brakeCar(carM.gasAmount);
-            }
-        });
-
-        carV.getStopButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                carM.stopCar();
-            }
-        });
-
-        carV.getTurboOnButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                carM.turboOn();
-            }
-        });
-
-        carV.getTurboOffButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                carM.turboOff();
-            }
-        });
-
-        carV.getLiftBedButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                carM.raiseDumpBox();
-            }
-        });
-
-        carV.getLowerBedButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                carM.lowerDumpBox();
-            }
-        });
-        carV.startButton.addActionListener(new ActionListener() {
-             @Override
-            public void actionPerformed(ActionEvent e){
-               carM.startCar();
-           }
-       });
-        carV.stopButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                carM.stopCar();
-            }
-        });
+        gasButton.addActionListener(e -> carM.gas(carM.gasAmount));
+        brakeButton.addActionListener(e -> carM.brakeCar(carM.gasAmount));
+        stopButton.addActionListener(e -> carM.stopCar());
+        turboOnButton.addActionListener(e -> carM.turboOn());
+        turboOffButton.addActionListener(e -> carM.turboOff());
+        liftBedButton.addActionListener(e -> carM.raiseDumpBox());
+        lowerBedButton.addActionListener(e -> carM.lowerDumpBox());
+        startButton.addActionListener(e -> carM.startCar());
     }
+
+
 }
 
 

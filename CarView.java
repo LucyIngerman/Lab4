@@ -74,11 +74,6 @@ public class CarView extends JFrame {
                         100, //max
                         1);//step
         gasSpinner = new JSpinner(spinnerModel);
-        //gasSpinner.addChangeListener(new ChangeListener() {
-         //   public void stateChanged(ChangeEvent e) {
-         //       gasAmount = (int) ((JSpinner)e.getSource()).getValue();
-         //   }
-        //});
 
         gasPanel.setLayout(new BorderLayout());
         gasPanel.add(gasLabel, BorderLayout.PAGE_START);
@@ -110,68 +105,6 @@ public class CarView extends JFrame {
         stopButton.setPreferredSize(new Dimension(X/5-15,200));
         this.add(stopButton);
 
-        // This actionListener is for the gas button only
-        // TODO: Create more for each component as necessary
-        // gasButton.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         carM.gas(gasAmount);
-        //     }
-        // });
-
-        // startButton.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e){
-        //         carM.startCar();
-        //     }
-        // });
-
-
-        // brakeButton.addActionListener(new ActionListener(){
-        //     @Override
-        //     public void actionPerformed(ActionEvent e){
-        //         carM.brakeCar(gasAmount);
-        //     }
-        // });
-
-        // stopButton.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e){
-        //         carM.stopCar();
-        //     }
-        // });
-
-        // turboOnButton.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         carM.turboOn();
-        //     }
-        // });
-
-        // turboOffButton.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         carM.turboOff();
-        //     }
-        // });
-
-        // liftBedButton.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-
-        //         carM.raiseDumpBox();
-        //     }
-        // });
-
-        // lowerBedButton.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-
-        //         carM.lowerDumpBox();
-        //     }
-        // });
-
-
 
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();
@@ -194,6 +127,9 @@ public class CarView extends JFrame {
 
     public JButton getStopButton() {
         return stopButton;
+    }
+    public JButton getStartButton() {
+        return startButton;
     }
 
     public JButton getTurboOnButton() {
@@ -224,7 +160,7 @@ class DrawPanel extends JPanel implements Observer{
     BufferedImage volvoImage;
     // To keep track of a single car's position
 
-    ArrayList<Vehicle> vehicles = new ArrayList<>();
+    ArrayList<VPos> vehiclePositions = new ArrayList<>();
 
     CarModel carM;
 
@@ -234,8 +170,9 @@ class DrawPanel extends JPanel implements Observer{
 
     BufferedImage saabImage;
 
-    public void update() {
-        vehicles = carM.getCurrentVehicles();
+    public void update(ArrayList<VPos> vPos) {
+        vehiclePositions = vPos;
+
         repaint();
     }
 
@@ -267,15 +204,15 @@ class DrawPanel extends JPanel implements Observer{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (Vehicle vehicle : vehicles) {
-            BufferedImage image = switch (vehicle.getClass().getSimpleName()) {
+        for (VPos vPos : vehiclePositions) {
+            BufferedImage image = switch (vPos.getID()) {
                 case "Volvo240" -> volvoImage;
                 case "Saab95" -> saabImage;
                 case "Scania" -> scaniaImage;
                 default -> null;
             };
-            int x = (int) vehicle.getPosition()[0];
-            int y = (int) vehicle.getPosition()[1];
+            int x = (int) vPos.getPosition()[0];
+            int y = (int) vPos.getPosition()[1];
             g.drawImage(image, x, y, null);
         }
         g.drawImage(volvoWorkshopImage, 300, 300, null);

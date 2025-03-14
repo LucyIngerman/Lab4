@@ -1,5 +1,7 @@
 package src;
 
+import java.util.ArrayList;
+
 public interface Observer {
-    void update();
+    void update(ArrayList<VPos> vPos);
 }

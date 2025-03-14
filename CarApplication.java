@@ -5,10 +5,11 @@ import java.io.IOException;
 
 public class CarApplication {
 
-    public static void main(String[] args) throws IOException {
+
+
+    public static void main(String[] args) {
         // Instance of this class
         CarModel cm = new CarModel();
-
 
         VehicleFactory factory = new VehicleFactory();
 
@@ -20,11 +21,14 @@ public class CarApplication {
         cm.vehicles.add(saab);
         cm.vehicles.add(scania);
         // Start a new view and send a reference of self
-        cm.frame = new CarView("CarSim 1.0", cm);
+        CarView frame = new CarView("CarSim 1.0", cm);
 
-        cm.registerObserver(cm.frame.drawPanel);
+        cm.registerObserver(frame.drawPanel);
 
-        cm.cc = new CarController(cm);
+
+        CarController cc = new CarController(cm, frame.getGasSpinner(), frame.getGasButton(), frame.getBrakeButton(),
+                frame.getStopButton(), frame.getTurboOnButton(), frame.getTurboOffButton(), frame.getLiftBedButton(),
+                frame.getLowerBedButton(), frame.getStartButton());
         // Start the timer
         cm.timer.start();
     }
