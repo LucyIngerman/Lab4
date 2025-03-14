@@ -25,8 +25,6 @@ public class CarView extends JFrame {
     private static final int Y = 800;
 
     // The controller member
-    CarModel carM;
-
     DrawPanel drawPanel;
 
     JPanel controlPanel = new JPanel();
@@ -42,18 +40,17 @@ public class CarView extends JFrame {
     JButton liftBedButton = new JButton("Scania Lift Bed");
     JButton lowerBedButton = new JButton("Lower Lift Bed");
 
+    JButton addCarButton = new JButton("Add Car");
+    JButton removeCarButton = new JButton("Remove Car");
+
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
 
     // Constructor
-    public CarView(String framename, CarModel cm){
-        this.carM = cm;
-        drawPanel = new DrawPanel(X, Y-240, cm);
+    public CarView(String framename){
+        drawPanel = new DrawPanel(X, Y-240);
         initComponents(framename);
     }
-
-
-
 
 
     // Sets everything in place and fits everything
@@ -89,6 +86,9 @@ public class CarView extends JFrame {
         controlPanel.add(brakeButton, 3);
         controlPanel.add(turboOffButton, 4);
         controlPanel.add(lowerBedButton, 5);
+        controlPanel.add(addCarButton, 6);
+        controlPanel.add(removeCarButton, 7);
+
         controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
@@ -147,6 +147,17 @@ public class CarView extends JFrame {
     public JButton getLowerBedButton() {
         return lowerBedButton;
     }
+
+    public JButton getAddCarButton() {
+        return addCarButton;
+    }
+
+    public JButton getRemoveCarButton() {
+        return removeCarButton;
+    }
+
+
+
     public JSpinner getGasSpinner() {
         return  gasSpinner;
     }
@@ -162,8 +173,6 @@ class DrawPanel extends JPanel implements Observer{
 
     ArrayList<VPos> vehiclePositions = new ArrayList<>();
 
-    CarModel carM;
-
     BufferedImage volvoWorkshopImage;
 
     BufferedImage scaniaImage;
@@ -177,11 +186,10 @@ class DrawPanel extends JPanel implements Observer{
     }
 
     // Initializes the panel and reads the images
-    public DrawPanel(int x, int y, CarModel carModel) {
+    public DrawPanel(int x, int y) {
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.green);
-        carM = carModel;
         try {
             // You can remove the "pics" part if running outside of IntelliJ and
             // everything is in the same main folder.

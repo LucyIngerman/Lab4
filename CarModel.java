@@ -2,15 +2,19 @@ package src;
 
 import javax.swing.*;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class CarModel implements Subject{
 
     private ArrayList<Observer> observers = new ArrayList<>();
+
+    ArrayList<Vehicle> vehiclesToAdd = new ArrayList<>();
 
     ArrayList<Vehicle> vehicles = new ArrayList<>();
     ArrayList<VPos> vPos = new ArrayList<>();
@@ -24,6 +28,33 @@ public class CarModel implements Subject{
     // The timer is started with a listener (see below) that executes the statements
     // each step between delays.
     Timer timer = new Timer(delay, new TimerListener());
+
+    public CarModel(){
+        VehicleFactory factory = new VehicleFactory();
+
+        Volvo240 volvo = factory.createVolvo240(Color.BLACK, 0, 300);
+
+        Saab95 saab = factory.createSaab95(Color.RED, 0, 0);
+        Scania scania = factory.createScania(Color.BLUE, 0, 150);
+        garage = factory.createVolvo240Garage(4, 300, 300);
+        vehicles.add(volvo);
+        vehicles.add(saab);
+        vehicles.add(scania);
+
+        Volvo240 volvoToAdd = factory.createVolvo240(Color.BLACK, 0, 500);
+        Saab95 saabToAdd = factory.createSaab95(Color.BLACK, 0, 450);
+        Scania scaniaToAdd = factory.createScania(Color.BLACK, 0, 400);
+
+        vehiclesToAdd.add(volvoToAdd);
+        vehiclesToAdd.add(scaniaToAdd);
+        vehiclesToAdd.add(saabToAdd);
+
+    }
+
+    public void start(){
+        timer.start();
+
+    }
 
 
 
@@ -92,7 +123,6 @@ public class CarModel implements Subject{
     // Calls the gas method for each car once
     void gas(int amount) {
         double gasAmount = ((double) amount) / 100;
-        System.out.println("yes");
         for (Vehicle vehicle : vehicles){
             vehicle.gas(gasAmount);
         }
@@ -103,7 +133,6 @@ public class CarModel implements Subject{
         for (Vehicle vehicle : vehicles){
             vehicle.startEngine();
         }
-        System.out.println("started");
     }
 
     void brakeCar(double amount){
@@ -154,6 +183,25 @@ public class CarModel implements Subject{
                 scania.lowerDumpBox(5);
             }
         }
+    }
+
+    void addCar(){
+        if (vehicles.size() >= 5){
+            return;
+        }
+
+        Vehicle vehicleToAdd = vehiclesToAdd.removeLast();
+        vehicles.add(vehicleToAdd);
+    }
+
+    void removeCar(){
+        if (vehicles.isEmpty()){
+            return;
+        }
+
+
+        Vehicle vehicle = vehicles.removeLast();
+        vehiclesToAdd.add(vehicle);
     }
 
 }
